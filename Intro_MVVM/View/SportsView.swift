@@ -15,6 +15,8 @@ struct SportsView: View {
 		self.viewModel = viewModel
 	}
 	
+	@State var newSportsViewIsPresented: Bool = false
+	
 	var body: some View {
 		NavigationStack {
 			
@@ -31,12 +33,17 @@ struct SportsView: View {
 				}
 			}
 			
+			
+			.sheet(isPresented: $newSportsViewIsPresented) {
+				NewSportsView(viewModel: self.viewModel)
+			}
+			
 			.navigationTitle("Esportes")
 			
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					Button {
-						viewModel.addSports()
+						newSportsViewIsPresented.toggle()
 					} label: {
 						Image(systemName: "plus.circle.fill")
 					}

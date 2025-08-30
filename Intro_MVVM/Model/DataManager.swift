@@ -28,14 +28,14 @@ class DataManager: DataManagerProtocol {
 		}
 	}
 	
-	func createSport() -> Result<Sport, Error> {
+	func createSport(_ newSport: SportWrapper) -> Result<Sport, Error> {
 		do {
 			let sport = Sport(context: self.viewContext)
-			sport.name = "Futebol"
-			sport.iconName = "soccerball.inverse"
-			sport.sportDescription = "Lorem Ipsum sit dolor amet"
-			sport.id = UUID()
-			sport.year = 1863
+			sport.name = newSport.name
+			sport.iconName = newSport.iconName
+			sport.sportDescription = newSport.sportDescription
+			sport.id = newSport.id
+			sport.year = Int16(newSport.year)
 			
 			try viewContext.save()
 			
@@ -59,6 +59,6 @@ class DataManager: DataManagerProtocol {
 }
 
 protocol DataManagerProtocol {
-	func createSport() -> Result<Sport, Error>
+	func createSport(_ newSport: SportWrapper) -> Result<Sport, Error>
 	func fetchSports() -> Result<[Sport], Error>
 }

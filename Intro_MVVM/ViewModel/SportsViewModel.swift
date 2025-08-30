@@ -26,8 +26,8 @@ class SportsViewModel: ObservableObject {
 		}
 	}
 	
-	func addSports() {
-		let result = dataManager.createSport()
+	func addSports(_ newSport: SportWrapper) {
+		let result = dataManager.createSport(newSport)
 		
 		switch result {
 		case .success(let sport):
