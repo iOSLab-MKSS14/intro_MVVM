@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Intro_MVVMApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+	
+	@StateObject var sportsViewModel = SportsViewModel(dataManager: DataManager())
+	
+	var body: some Scene {
+		WindowGroup {
+			SportsView(viewModel: sportsViewModel)
+		}
+	}
 }
