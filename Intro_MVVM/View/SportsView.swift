@@ -31,11 +31,20 @@ struct SportsView: View {
 						Text(sport.name ?? "sportName")
 					}
 				}
+				.swipeActions {
+					Button(role: .destructive) {
+						viewModel.deleteSport(sport)
+					} label: {
+						Image(systemName: "trash")
+					}
+				}
 			}
 			
 			
 			.sheet(isPresented: $newSportsViewIsPresented) {
 				NewSportsView(viewModel: self.viewModel)
+					.interactiveDismissDisabled()
+					.presentationDetents([.medium, .large])
 			}
 			
 			.navigationTitle("Esportes")

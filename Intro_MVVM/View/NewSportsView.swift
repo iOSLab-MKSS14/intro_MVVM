@@ -23,16 +23,23 @@ struct NewSportsView: View {
 		NavigationStack {
 			
 			Form {
-				
 				primaryForm
 				
 				// Preview
 				preview
-				
-				// Botões cancelar/concluir
-				concludeButtons
 			}
 			.navigationTitle("Novo Esporte")
+			
+			.toolbar {
+				// Botões cancelar/concluir
+				ToolbarItem(placement: .confirmationAction) {
+					confirmButton
+				}
+				
+				ToolbarItem(placement: .cancellationAction) {
+					cancelButton
+				}
+			}
 		}
 		
 		
@@ -75,30 +82,31 @@ extension NewSportsView {
 		}
 	}
 	
-	var concludeButtons: some View {
-		Section {
-			HStack {
-				Button {
-					dismiss()
-				} label: {
-					Text("Cancelar")
-						.foregroundStyle(.red)
-						.bold()
-				}
-				
-				Spacer()
-				
-				Button {
-					let newSport = SportWrapper(iconName: sportIcon, name: sportName, sportDescription: "Lorem Ipsum", year: sportYear)
-					
-					viewModel.addSports(newSport)
-					
-					dismiss()
-				} label: {
-					Text("Concluir")
-				}
-			}
+	var cancelButton: some View {
+		Button {
+			dismiss()
+		} label: {
+			Text("Cancelar")
+				.foregroundStyle(.red)
+				.bold()
 		}
 	}
+	
+	var confirmButton: some View {
+		Button {
+			let newSport = SportWrapper(iconName: sportIcon, name: sportName, sportDescription: "Lorem Ipsum", year: sportYear)
+			
+			
+			viewModel.addSports(newSport)
+			
+			dismiss()
+			
+		} label: {
+			Text("Concluir")
+		}
+		.disabled(sportName.isEmpty)
+		
+	}
+	
 	
 }

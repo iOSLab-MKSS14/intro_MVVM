@@ -37,6 +37,13 @@ class SportsViewModel: ObservableObject {
 			self.errorMessage = error.localizedDescription
 		}
 	}
+	
+	func deleteSport(_ sportToDelete: Sport) {
+		
+		sports.removeAll(where: { $0 == sportToDelete })
+		
+		let sportName = dataManager.deleteSport(sportToDelete)
+	}
 }
 
 //[

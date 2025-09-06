@@ -34,7 +34,7 @@ class DataManager: DataManagerProtocol {
 			sport.name = newSport.name
 			sport.iconName = newSport.iconName
 			sport.sportDescription = newSport.sportDescription
-			sport.id = newSport.id
+			sport.id = UUID()
 			sport.year = Int16(newSport.year)
 			
 			try viewContext.save()
@@ -56,9 +56,25 @@ class DataManager: DataManagerProtocol {
 			return .failure(error)
 		}
 	}
+	
+	func deleteSport(_ sport: Sport) -> Result<String, Error> {
+		
+		let sportName = sport.name
+		
+		viewContext.delete(sport)
+
+		do {
+			try viewContext.save()
+			
+			return.success(sportName ?? "Unknown Name")
+		} catch {
+			return .failure(error)
+		}
+	}
 }
 
 protocol DataManagerProtocol {
 	func createSport(_ newSport: SportWrapper) -> Result<Sport, Error>
 	func fetchSports() -> Result<[Sport], Error>
+	func deleteSport(_ sport: Sport) -> Result<String, Error>
 }
